@@ -1,4 +1,4 @@
-function barPlotMultGen(name,AllGen_MeansStim,AllGen_ErrorsStim,AllDataPointsStim,dataPoints_out_spEmptyShts,ep,beh,figLeg,ylimUp,addPoints)
+function barPlotMultGen(name,AllGen_MeansStim,AllGen_ErrorsStim,AllDataPointsStim,dataPoints_out_spEmptyShts,ep,beh,figLeg,ylimUp,addPoints,pVal)
 %
 color = linspecer(3);
 
@@ -18,6 +18,7 @@ b(3).FaceColor = color(2,:);
 
 % Plot the errorbars
 errorbar(x',AllGen_MeansStim,AllGen_ErrorsStim,'k','linestyle','none','LineWidth',1.5);
+% text(x,ylimUp,num2str(pVal))
 set(gca,'xticklabel',name)
 hold on 
 
@@ -44,23 +45,16 @@ ax=gca;
 ax.FontSize = 14;
 ylim([0 ylimUp]) %-215 90 or -50 to 120
 
-if ep == 6 || ep == 12 
-legend('Empty > Shts','Gal4 > Iso D1','Gal4 > Shts')
-end
-if beh == 2
-    if ep == 6
-ylabel('Mean Walking response')
-    end
-elseif beh ==1
-if ep == 6
-ylabel('Mean Turning response')
-    end
-end
+
+legend('Empty > Shts','Gal4 > IsoD1','Gal4 > Shts')
+ylabel('Mean freezing fraction ')
+   
 
 if length(figLeg) > 1
 title(figLeg{ep},'FontSize',22)
 end
 hold off
 
+ConfAxis()
 
 end

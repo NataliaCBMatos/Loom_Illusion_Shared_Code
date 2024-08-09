@@ -12,6 +12,7 @@ for gen = 1:length(allGens)
     [allCondAvStop,allCondSEMStop,allFlyStop] = ProbStopperfly(condMax,flyResp,thre);
     
     [DataPoint, NeuType_Mean, NeuType_Error] = MeanPointsAndBar(allCondAvStop,allFlyStop, init, final,timeX, ep);
+    
     dataPointsStore{gen} = DataPoint';
     Mean_Store{gen} =NeuType_Mean;
     Error_Store{gen} = NeuType_Error;

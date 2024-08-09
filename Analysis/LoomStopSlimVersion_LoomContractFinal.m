@@ -102,9 +102,9 @@ finalAll = init + 30./vel;
 %condLC4 = [4,3,6,5];
 idx = 1;
 
-%final =3.5; 
+%final =3.5; l
 
-for cond =3:6
+for cond =5:6
 final = finalAll(idx)
 allGens = {out_spEmptyShts,out_LPLC1_IsoD1,out_LPLC1_Shts,...
     out_T4T5_IsoD1,out_T4T5_Shts,out_LPLC2_IsoD1,...
@@ -130,7 +130,13 @@ AllGen_ErrorsStim = [ErrorAllGens{1} ErrorAllGens{2} ErrorAllGens{3};...
     ErrorAllGens{1} ErrorAllGens{10} ErrorAllGens{11};...
     ErrorAllGens{1} ErrorAllGens{12} ErrorAllGens{13}];
 
-subplot(2,2,idx)
-barPlotMultGen(name,AllGen_MeansStim,AllGen_ErrorsStim,DataPoints(2:end),cell2mat(DataPoints(1)),idx,beh,figLeg,0.6,0)
+
+
+[p1,p2]=statisticSig(DataPoints);
+pVal{idx}(:,1)=p1;
+pVal{idx}(:,2)=p2;
+
+subplot(2,1,idx)
+barPlotMultGen(name,AllGen_MeansStim,AllGen_ErrorsStim,DataPoints(2:end),cell2mat(DataPoints(1)),idx,beh,figLeg,0.7,0)
 idx = idx +1;
 end

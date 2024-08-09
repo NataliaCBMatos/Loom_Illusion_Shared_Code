@@ -4,9 +4,10 @@ function [MeanByIndFly,avISOval,avISOvalSTD] = MeanPointsAndBar(allCondAvStopISO
     finish=min(find(timeX>=final));
 
     avISOval=mean(allCondAvStopISOD1(start:finish,ep),1);
-    avISOvalSTD = stderror(allCondAvStopISOD1(start:finish,ep));
+%     avISOvalSTD = stderror(allCondAvStopISOD1(start:finish,ep));
     
     MeanByIndFly=mean(allFlyStopISOD1{1, ep}(start:finish,:),1  );
+    avISOvalSTD=std(MeanByIndFly)/sqrt(length(MeanByIndFly));
 
 
 end

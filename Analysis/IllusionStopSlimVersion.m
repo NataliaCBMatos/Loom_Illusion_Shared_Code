@@ -6,10 +6,7 @@ close all
 sysConfig = GetSystemConfiguration;
 
 %% Getting Genotypes
-
 stim = 'R5LoomIlluP05P1IncrDecr';
-
-
 genotype = 'EMPTYDBD_SHTS_MAY23';
 %genotype = 'Natalia_SpEmpty_ShtsShts'
 datapath0=[sysConfig.dataPath,'/',genotype,'/',stim];
@@ -18,7 +15,7 @@ datapath0=[sysConfig.dataPath,'/',genotype,'/',stim];
 genotype = 'LPLC1_ISOD1_JAN23';
 datapath1=[sysConfig.dataPath,'/',genotype,'/',stim];
 
-genotype = 'LPLC1_SHTS_JAN23'
+genotype = 'LPLC1_SHTS_JAN23';
 datapath2=[sysConfig.dataPath,'/',genotype,'/',stim];
 
 
@@ -121,7 +118,7 @@ figLeg={'5illuloom Side P1 DC1','5illuloom Front P1 DC1',...
 
 idx = 1;
 
-for cond =1:4
+for cond =1:2
     
 
 allGens = {out_spEmptyShts,out_LPLC1_IsoD1,out_LPLC1_Shts,...
@@ -136,6 +133,13 @@ allGens = {out_spEmptyShts,out_LPLC1_IsoD1,out_LPLC1_Shts,...
 
 
 [DataPoints, Meanss, ErrorAllGens] = BarPlotDataPrepCond(allGens,beh,thre,init,final,cond);
+
+
+
+
+
+
+
 
 % AllGen_MeansStim = [Meanss{1} Meanss{2} Meanss{3};...
 %     Meanss{1} Meanss{4} Meanss{5};...
@@ -162,23 +166,18 @@ AllGen_ErrorsStim = [ErrorAllGens{1} ErrorAllGens{2} ErrorAllGens{3};...
     ErrorAllGens{1} ErrorAllGens{10} ErrorAllGens{11};...
     ErrorAllGens{1} ErrorAllGens{12} ErrorAllGens{13}];
 
-subplot(2,2,idx)
-barPlotMultGen(name,AllGen_MeansStim,AllGen_ErrorsStim,DataPoints(2:end),cell2mat(DataPoints(1)),cond,beh,figLeg,0.6,0)
+
+
+[p1,p2]=statisticSig(DataPoints);
+pVal{idx}(:,1)=p1;
+pVal{idx}(:,2)=p2;
+
+
+
+subplot(1,2,idx)
+barPlotMultGen(name,AllGen_MeansStim,AllGen_ErrorsStim,DataPoints(2:end),cell2mat(DataPoints(1)),cond,beh,figLeg,0.6,0,pVal{idx})
 idx = idx +1;
 end
 
-%%
-
-%% STATISTICS
-
-T4T5_Analysis = {T4T5_IsoD1(:,cond),T4T5_Shts(:,cond),spEmptyShts(:,cond)}
-[p,tblT4T5,stats] = Kruskawalis_data(T4T5_Analysis)
-
-[c,m,h,gnames] = multcompare(stats);
-c(:,3:5) = [];
 
 
-tblT4T5 = array2table(c,"VariableNames", ...
-    ["Group","Control Group","P-value"]);
-tblT4T5.("Group") = gnames(tblT4T5.("Group"));
-tblT4T5.("Control Group") = gnames(tblT4T5.("Control Group"))
